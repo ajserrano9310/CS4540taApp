@@ -1,0 +1,174 @@
+﻿@model PS4_TAApplication.Applications
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!--
+  Author:    Alejandro Serrano
+  Partner:   None
+  Date:      9/28/2021
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Alejandro Serrano - This work may not be copied for use in Academic Coursework.
+
+  I, Alejandro Serrano, certify that I edited this code from what was provided by scaffolding and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+
+  File Contents
+
+    The current file shows the form that will be utilized for TA Application
+-->
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h1>Application Form</h1>
+    </div>
+    <p class="lead"> Please provide the required information for the TA positions for Spring 2021</p>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Resume and Image</span>
+        </h4>
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">Image Upload</h6>
+                    <small class="text-muted">Button</small>
+                </div>
+            </li>
+            <li class="list-group-item d-flex lh-condensed">
+                <div>
+                    <h6 class="my-0">Resume Upload</h6>
+                    <small class="text-muted">Button</small>
+                    <input type="file" class="form-control" id="customFile" />
+                </div>
+        </ul>
+
+        <form asp-action="Create" class="card p-2">
+            <div class="input-group">
+                <label asp-for="Linkedin" class="control-label">Linkedin</label>
+                <input asp-for="Linkedin" class="form-control" />
+                <span asp-validation-for="Linkedin" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8 order-md-1">
+        <form asp-action="Create">
+            <h4> Basic Information </h4>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label">Last Name</label>
+
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6 mb-3">
+
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label asp-for="uID" class="control-label">UNID</label>
+                        <input asp-for="uID" class="form-control" />
+                        <span asp-validation-for="uID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label">Address</label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <h4>University Status</h4>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label asp-for="GPA" class="control-label">GPA</label>
+                        <input asp-for="GPA" class="form-control" />
+                        <span asp-validation-for="GPA" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label asp-for="CurrentDegree" class="control-label">Current Degree</label>
+                        <select asp-for="Fluency" class="form-control">
+                            <option>CS</option>
+                            <option>CE</option>
+                            <option>ME</option>
+                            <option>Other</option>
+                        </select>
+                        <span asp-validation-for="CurrentDegree" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <h4>How many semesters have you been at the U?</h4>
+            <div class="form-group">
+                <input asp-for="Semesters" class="form-control" />
+                <span asp-validation-for="Semesters" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md h5 mb-3">
+                    <label asp-for="WorkHours" class="control-label"> Hours Available</label>
+
+                    <select asp-for="WorkHours" class="custom-select d-block w-100">
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                    </select>
+                    <span asp-validation-for="WorkHours" class="text-danger"></span>
+                </div>
+                <div class="col-md h5 mb-3">
+                    <label asp-for="Fluency" class="control-label">English Fluency</label>
+                    <select asp-for="Fluency" class="form-control">
+                        <option>None</option>
+                        <option>Intermediate</option>
+                        <option>Fluent</option>
+                    </select>
+                    <span asp-validation-for="Fluency" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ApplicationDate" class="control-label"></label>
+                <input asp-for="ApplicationDate" class="form-control" />
+                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

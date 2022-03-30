@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PS6_Courses_Google</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+    <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.2.0/browser/pixi.js'></script>
+</head>
+@using Microsoft.AspNetCore.Identity
+@using PS4_TAApplication.Areas.Identity.Data
+@using System.Security.Claims;
+@using PS4_TAApplication.Models
+@inject SignInManager<TAUser> SignInManager
+@inject UserManager<TAUser> UserManager
+
+
+<body style="background-color: antiquewhite">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container d-flex flex-column flex-md-row justify-content-between"  >
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PS6_Courses_Google</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Chart" asp-action="Charts">Line Chart </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Chart" asp-action="PieChart">Pie Chart </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Availability" asp-action="Avail">Avail </a>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    TA App!
+                                </button>
+                                <div class="dropdown-menu">
+                                    <p>Alejandro Serrano</p>
+                                    <a class="dropdown-item" href=/Courses/Index>Course List</a>
+                                    <a asp-controller="Courses" asp-action="Details" asp-route-id=1>
+                                        Details Course 1
+                                    </a>
+                                    <a asp-controller="Courses" asp-action="Edit" asp-route-id=1>
+                                        Edit Course 1
+                                    </a>
+                                    <a asp-controller="Courses" asp-action="Create">
+                                        Create a Course
+                                    </a>
+
+                                    <a class="dropdown-item" href=/Applications/Edit/1>Edit Page</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - PS4_TAApplication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

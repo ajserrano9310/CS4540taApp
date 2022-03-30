@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model IEnumerable<PS4_TAApplication.Models.CourseEnrollment>
+@{ 
+    var coursList = Model.ToList(); 
+}
+
+    <div>
+        <h1>
+            Enrollment per day
+        </h1>
+        <p class="lead"> Please select a start and end date. Then the button will compute the chart.</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <select id="courses" class="form-select" aria-label="Default select example">
+                    <option selected>Course</option>
+                    @foreach(var course in coursList)
+                    {
+                        string name = course.CourseName; 
+                        <option value=@name> @name </option> 
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <button class="btn btn-outline-secondary" onclick="drawPieChart(document.getElementById('courses').value, 0, 28)"> Do it</button>
+            </div>
+        </div>
+    </div>
+        <figure class="highcharts-figure">
+            <div id="piechart"></div>
+            <p class="highcharts-description lead">
+                Basic pie chart that shows how many students have registered for a particular class. The pie chart does not include
+                different dates, since it seems that for its construction a set amount of values is needed. 
+            </p>
+            <p class="lead">
+            User is still allowed to select different classes to check for different information. The pie will redraw itself and will omitt days
+            where the registration is 0.  
+            </p>
+        </figure>
+
+        @section Styles
+{
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.3.2/css/highcharts.min.css" integrity="sha512-/G4PBY3DrEXBrex90H73x+CRfmCvcSp57ifLtzrwVs4HmOVDccjIPSpGyJwKJmg6qfEDi0tHFaq2mLECK40WjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        }
+        @section Scripts{
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.3.2/highcharts.js" integrity="sha512-dm3Cn0X6XyRMz52WqL1wag+e2WCNAnggh2+4mv/9Ngd+IhBIH9NEQYUZ4g3A6GJUbhKrGw5hErqcFIyk73lUgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="~/js/Admin/Piechart.js"></script>
+        }

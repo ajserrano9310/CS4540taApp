@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Identity;
+@using PS4_TAApplication.Areas.Identity.Data;
+@inject UserManager<TAUser> userManager
+@inject SignInManager<TAUser> SignInManager
+<link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet'>
+
+<!--
+    Author:    Alejandro Serrano
+    Partner:   None
+    Date:      10/25/2021
+    Course:    CS 4540, University of Utah, School of Computing
+    Copyright: CS 4540 and Alejandro Serrano - This work may not be copied for use in Academic Coursework.
+
+    I, Alejandro Serrano, certify that I created this code from scratch and did not copy it in part or whole from
+    another source.  Any references used in the completion of the assignment are cited in my README file.
+
+    File Contents
+
+    Updated home page to look more pleasing for users. It changes depending on which user has logged in. 
+  -->
+
+<div class="card">
+    <div class="card-header">
+        <h1 style="font-family:'Arvo'">TA Applications</h1>
+    </div>
+    <img src="/Images/3776134.jpg" alt="Icon Image" width="1110" height="700">
+    <div class="card-body">
+        <h5 style="font-family:'Arvo'">TA Applications are now open for Spring 2022</h5>
+        <p class="card-text lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h6 style="font-family:'Arvo'">
+                    Please register to apply and be part of the SOC family!
+                </h6>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("Applicant"))
+    {
+        var user = await userManager.GetUserAsync(User);
+        if (user.ApplicationCompleted)
+        {
+            <div class="card">
+                <div class=" card-header">
+                    <h4 style="font-family:'Arvo'">Role Applicant</h4>
+                </div>
+                <div class=" card-body">
+                    <p class="lead">User has finshed their Application. Nothing to see.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class=" card-header">
+                    <h4 style="font-family:'Arvo'">Role Applicant</h4>
+                </div>
+                <div class=" card-body">
+                    <p class="lead">Saved user has not completed the application. Please, take a minute to finish your application.</p>
+                    <a href=/Applications/Create class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Apply now!</a>
+                </div>
+            </div>
+        }
+    }
+    if (User.IsInRole("Professor"))
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4 style="font-family:'Arvo'">Welcome Professor</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Your lost prof? Maybe you can check the list of courses see if we forgot yours</p>
+                <a href=/Courses/Index class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Course List</a>
+            </div>
+        </div>
+
+    }
+    if (User.IsInRole("Administrator"))
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4 style="font-family:'Arvo'">Welcome Admin</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Admin can see the list of users and courses.</p>
+                <a href=/Home/Admin class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Admin page</a>
+                <a href=/Courses/Index class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Course List</a>
+            </div>
+        </div>
+    }
+}
+
+

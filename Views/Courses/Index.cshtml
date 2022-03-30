@@ -1,0 +1,103 @@
+﻿<!--
+    Author:    Alejandro Serrano
+    Partner:   None
+    Date:      10/25/2021
+    Course:    CS 4540, University of Utah, School of Computing
+    Copyright: CS 4540 and Alejandro Serrano - This work may not be copied for use in Academic Coursework.
+
+    I, Alejandro Serrano, certify that I created this code from scratch and did not copy it in part or whole from
+    another source.  Any references used in the completion of the assignment are cited in my README file.
+
+    File Contents
+
+    List of courses. Edited based on the U's class schedule
+  -->
+@model IEnumerable<PS4_TAApplication.Models.Course>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using Microsoft.AspNetCore.Identity;
+@using PS4_TAApplication.Areas.Identity.Data;
+@inject UserManager<TAUser> userManager
+@inject SignInManager<TAUser> SignInManager
+
+<h1 style="font-family:'Arvo'">Course List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@{
+    string id1 = "submit";
+    int count1 = 0;
+    string submitid1 = "";
+}
+
+@foreach (var item in Model)
+{
+    submitid1 = id1 + count1;
+
+
+    <div class="card mt-3">
+        <div class="card-body row d-none d-md-block">
+            <div class="card-header col-12 p-0">
+                <h5 style="font-family:'Arvo'"> @Html.DisplayFor(modelItem => item.Department)@Html.DisplayFor(modelItem => item.CourseNumber): @Html.DisplayFor(modelItem => item.Title)</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="col-12 p-0">
+                <ul class="row breadcrumb-list list-unstyled">
+                    <li class="col-sm-auto">
+                        <p class="lead"> Prof.: @Html.DisplayFor(modelItem => item.ProfName) | </p>
+                    </li>
+                    <li class="col-sm-auto">
+                        <p class="lead"> Time/Day: @Html.DisplayFor(modelItem => item.TimeDay) | </p>
+                    </li>
+                    <li class="col-sm-auto">
+                        <p class="lead"> Location: @Html.DisplayFor(modelItem => item.Location) | </p>
+                    </li>
+                    <li>
+                        <p class="lead"> Credits: @Html.DisplayFor(modelItem => item.CreditHours) | </p>
+                    </li>
+                    <li class="col-sm-auto">
+                        <p class="lead"> Capacity: @Html.DisplayFor(modelItem => item.Capacity)</p>
+                    </li>
+                </ul>
+                <div>
+                    <h6 style="font-family:'Arvo'">
+                        Course Description:
+                    </h6>
+                    <p class="lead">
+                        @Html.DisplayFor(modelItem => item.CourseDescription)
+                    </p>
+                </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                    if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        <div class="form-group">
+                            <label for=@submitid1>Admin Note</label>
+                            <textarea class="form-control" id=@submitid1 rows="3">@Html.DisplayFor(modelItem => item.Note)</textarea>
+                        </div>
+                        count1++;
+
+                        <div>
+                            <button onclick="submit_note(document.getElementById('@submitid1').value, @item.ID)" type="button" class="btn btn-primary">Add Note</button>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts {
+
+    <script src="~/js/ajax.js"></script>
+
+}
+

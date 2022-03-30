@@ -1,0 +1,173 @@
+﻿<!--
+  Author:    Alejandro Serrano
+  Partner:   None
+  Date:      12/9/2021
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Alejandro - This work may not be copied for use in Academic Coursework.
+
+  I, Alejandro Serrano, certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+
+  File Contents
+
+     This page handles drawing the chart based on the input of the user. This is the basic line chart
+    that was required. 
+-->
+
+@model IEnumerable<PS4_TAApplication.Models.CourseEnrollment>
+@{
+    var courseList = Model.ToList();
+
+}
+
+<div>
+    <h1>
+        Enrollment per day
+    </h1>
+    <p class="lead"> Please select a start and end date. Then press the do it button to compute the chart.</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h5> Start date </h5>
+        </div>
+        <div class="col">
+            <select id="startdates" class="form-select" aria-label="Default select example">
+                <option selected>Start</option>
+                <option value=0>2021-11-01</option>
+                <option value=1>2021-11-02</option>
+                <option value=2>2021-11-03</option>
+                <option value=3>2021-11-04</option>
+                <option value=4>2021-11-05</option>
+                <option value=5>2021-11-06</option>
+                <option value=6>2021-11-07</option>
+                <option value=7>2021-11-08</option>
+                <option value=8>2021-11-09</option>
+                <option value=9>2021-11-10</option>
+                <option value=10>2021-11-11</option>
+                <option value=11>2021-11-12</option>
+                <option value=12>2021-11-13</option>
+                <option value=13>2021-11-14</option>
+                <option value=14>2021-11-15</option>
+                <option value=15>2021-11-16</option>
+                <option value=16>2021-11-17</option>
+                <option value=17>2021-11-18</option>
+                <option value=18>2021-11-19</option>
+                <option value=19>2021-11-20</option>
+                <option value=20>2021-11-21</option>
+                <option value=21>2021-11-22</option>
+                <option value=22>2021-11-23</option>
+                <option value=23>2021-11-24</option>
+                <option value=24>2021-11-25</option>
+                <option value=25>2021-11-26</option>
+                <option value=26>2021-11-27</option>
+                <option value=27>2021-11-28</option>
+                <option value=28>2021-11-29</option>
+            </select>
+        </div>
+        <div class="col">
+            <h5> End date </h5>
+        </div>
+        <div class="col">
+            <select id="enddates" class="form-select" aria-label="Default select example">
+                <option selected>End</option>
+                <option value="0">2021-11-01</option>
+                <option value="1">2021-11-02</option>
+                <option value="2">2021-11-03</option>
+                <option value="3">2021-11-04</option>
+                <option value="4">2021-11-05</option>
+                <option value="5">2021-11-06</option>
+                <option value="6">2021-11-07</option>
+                <option value="7">2021-11-08</option>
+                <option value="8">2021-11-09</option>
+                <option value="9">2021-11-10</option>
+                <option value="10">2021-11-11</option>
+                <option value="11">2021-11-12</option>
+                <option value="12">2021-11-13</option>
+                <option value="13">2021-11-14</option>
+                <option value="14">2021-11-15</option>
+                <option value="15">2021-11-16</option>
+                <option value="16">2021-11-17</option>
+                <option value="17">2021-11-18</option>
+                <option value="18">2021-11-19</option>
+                <option value="19">2021-11-20</option>
+                <option value="20">2021-11-21</option>
+                <option value="21">2021-11-22</option>
+                <option value="22">2021-11-23</option>
+                <option value="23">2021-11-24</option>
+                <option value="24">2021-11-25</option>
+                <option value="25">2021-11-26</option>
+                <option value="26">2021-11-27</option>
+                <option value="27">2021-11-28</option>
+                <option value="28">2021-11-29</option>
+            </select>
+        </div>
+        <div class="col">
+            <select id="courses" class="form-select" aria-label="Default select example">
+                <option selected>Course</option>
+                @foreach (var course in courseList)
+                {
+                    string name = course.CourseName;
+                    <option value=@name>@name</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <button id="drawchart" class="btn btn-primary" onclick="drawChart(document.getElementById('courses').value, document.getElementById('startdates').value, document.getElementById('enddates').value)"> Do it</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-info" onclick="addSeries(document.getElementById('courses').value, document.getElementById('startdates').value, document.getElementById('enddates').value)">Add series</button>
+        </div>
+    </div>
+</div>
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description lead">
+        Line chart that shows the increase in enrollments per day for a particular course.
+    </p>
+</figure>
+
+<figure class="highcharts-figure">
+    <div id="percentage"></div>
+    <p class="highcharts-description lead">
+    </p>
+</figure>
+<div id="spinner" class="spinner-border spinner-border-sm" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
+
+
+
+@section Styles
+
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.3.2/css/highcharts.min.css" integrity="sha512-/G4PBY3DrEXBrex90H73x+CRfmCvcSp57ifLtzrwVs4HmOVDccjIPSpGyJwKJmg6qfEDi0tHFaq2mLECK40WjQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/9.3.2/highcharts.js" integrity="sha512-dm3Cn0X6XyRMz52WqL1wag+e2WCNAnggh2+4mv/9Ngd+IhBIH9NEQYUZ4g3A6GJUbhKrGw5hErqcFIyk73lUgA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="~/js/Admin/Charts.js"></script>
+    <script>
+
+        $('#spinner').hide();
+
+    </script>
+    <script>
+
+        $('#drawchart').click(function () {
+            $('#spinner').show();
+            setInterval(function () {
+                $('#spinner').hide();
+            }, 1000)
+        });
+
+        $('#startdates').change(function () {
+            $('#startdates').prop('disabled', true);
+        })
+    </script>
+}

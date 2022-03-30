@@ -1,0 +1,99 @@
+﻿@model IEnumerable<PS4_TAApplication.Applications>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!--
+  Author:    Alejandro Serrano
+  Partner:   None
+  Date:      9/28/2021
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Alejandro Serrano - This work may not be copied for use in Academic Coursework.
+
+  I, Alejandro Serrano, certify that I edited this code from what was provided by scaffolding and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+
+  File Contents
+
+    The current file shows list of applicants. It also displays what is considered the most
+    relevant information.
+-->
+@{ 
+    var applications = Model.ToArray();
+}
+<h1 class="lead">List of Applicants</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th class="text-center">
+
+                uID
+            </th>
+            <th class="text-center">
+                Last Name
+            </th>
+            <th class="text-center">
+                First Name
+            </th>
+            <th class="text-center">
+                GPA
+            </th>
+            <th class="text-center">
+                Current Degree
+            </th>
+            <th class="text-center">
+                Availability
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in applications)
+        {
+            <tr>
+                <td class="text-center">
+
+                    @Html.DisplayFor(modelItem => item.uID)
+
+                </td>
+                <td class="text-center">
+                    <a asp-action="Details" asp-route-id="@item.ID">
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </a>
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.GPA)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.CurrentDegree)
+                </td>
+                <td class="text-center">
+                    @{ var hours = item.WorkHours;
+                        @if (hours == 20)
+                        {
+
+                            <span class="badge badge-success badge-pill">@Html.DisplayFor(modelItem => item.WorkHours)</span>
+                        }
+                        else if (hours == 15)
+                        {
+                            <span class="badge badge-info badge-pill">@Html.DisplayFor(modelItem => item.WorkHours)</span>
+                        }
+                        else
+                        {
+
+                            @Html.DisplayFor(model => item.WorkHours)
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

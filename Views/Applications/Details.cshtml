@@ -1,0 +1,142 @@
+﻿@model PS4_TAApplication.Applications
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!--
+  Author:    Alejandro Serrano
+  Partner:   None
+  Date:      9/28/2021
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Alejandro Serrano - This work may not be copied for use in Academic Coursework.
+
+  I, Alejandro Serrano, certify that I edited this code from what was provided by scaffolding and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+
+  File Contents
+
+    The current file shows the form that will allow the user to edit their page.
+-->
+<h1>Applicant's Info</h1>
+<div>
+    <img class="rounded-circle" src="/Images/usericon.jpg" alt="Icon Image" width="140" height="140">
+</div>
+
+
+<div>
+    <hr />
+    <h4 class="lead">Basic Information</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Last Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            First Name
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            U of U Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.uID)
+        </dd>
+        <dt class="col-sm-2">
+            Phone Number
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    </dl>
+    <hr />
+    <h4 class="lead">University Status</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GPA)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GPA)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CurrentDegree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CurrentDegree)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Work Availability
+        </dt>
+
+        <dd class="col-sm-10">
+            @{ var hours = Model.WorkHours;
+                @if (hours == 20)
+                {
+
+                    <span class="badge badge-success badge-pill">@Html.DisplayFor(model => model.WorkHours)</span>
+                }
+                else if (hours == 15)
+                {
+                    <span class="badge badge-info badge-pill">@Html.DisplayFor(model => model.WorkHours)</span>
+                }
+                else
+                {
+
+                    @Html.DisplayFor(model => model.WorkHours)
+                }
+            }
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            English Fluency
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Fluency)
+        </dd>
+    </dl>
+    <hr />
+    <h4 class="lead"> Links, Linkedin and Resume</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Linkedin Link
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Linkedin)
+        </dd>
+        <dt class="col-sm-2">
+            Resume
+        </dt>
+        <dd class="col-sm-10">
+            Uploaded
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ApplicationDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ApplicationDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn-dark btn-primary" asp-route-id="@Model.ID" asp-action="Edit">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.ID">Delete</a> |
+    <a asp-action="List">Back to List</a>
+</div>
